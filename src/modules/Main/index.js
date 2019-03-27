@@ -16,6 +16,7 @@ class Main extends React.Component {
   state = {
     compCoef: 1,
     errors: {},
+    disableInput: true,
   }
 
   readFile = (event) => {
@@ -27,19 +28,27 @@ class Main extends React.Component {
       return;
     }
     const file = event.target.files[0];
-    this.props.sendImage(event.target, compCoef);
+    this.props.sendImage(event.target, compCoef, this.redirect);
     
   }
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  render() {
-    if (this.props.image) {
-      this.props.history.push('/image');
-    }
+  onBlur = (event) => {
+    const compressionCoefNumber = Number(event.target.value);
 
+    if (!compressionCoefNumber || compressionCoefNumber === NaN || compressionCoefNumber < 1) {
+      this.setState({ disableInput: true });
+      return;
+    }
+    this.setState({ disableInput: false });
+  }
+
+  redirect = () => this.props.history.push('/image')
+
+  render() {
     const { errors } = this.state;
     return (
       <div className="wrapper">
@@ -48,6 +57,7 @@ class Main extends React.Component {
               <TextFieldGroup
                 label="Compression coefficient: "
                 onChange={this.onChange}
+                onBlur={this.onBlur}
                 value={this.state.compCoef + ''}
                 field="compCoef"
               />
@@ -81,7 +91,7 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    sendImage: (image, compCoef) => dispatch(sendImage(image, compCoef)),
+    sendImage: (image, compCoef, callback) => dispatch(sendImage(image, compCoef, callback)),
   };
 }
 

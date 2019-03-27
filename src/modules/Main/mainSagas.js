@@ -8,20 +8,22 @@ import {
   SET_IMAGE,
 } from './constants';
 
-function* sendImage({ image, compCoef }) {
+function* sendImage({ image, compCoef, callback }) {
   try {
     var bodyFormData = new FormData();
     bodyFormData.append('image', image.files[0]);
-    bodyFormData.append('compCoef', compCoef);
+    bodyFormData.append('count', compCoef);
 
     image = bodyFormData.get('image');
     const requestConfig = {
       method: 'post',
-      url: 'http://httpbin.org/post',
+      url: 'http://354065d4.ngrok.io/api/ImageResizer/GetDeviations',
       data: bodyFormData,
       config: { headers: {'Content-Type': 'multipart/form-data' }}
     };
-    // const { data } = yield call(axios, requestConfig);
+    debugger
+    const { data: { deviations } } = yield call(axios, requestConfig);
+    debugger
     const MOCK_ARRAY = [
       [0, 1, 2, 3],
       [4, 5, 6, 7],
@@ -32,8 +34,10 @@ function* sendImage({ image, compCoef }) {
       type: SET_IMAGE,
       image,
       compCoef,
-      countedData: MOCK_ARRAY,
+      countedData: deviations,
     });
+
+    callback();
   } catch ({ message }) {
     console.error(message);
   }

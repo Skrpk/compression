@@ -17,6 +17,7 @@ class ImageDetails extends React.Component {
         mathExp: 0,
         imageWidth: 0,
         imageHeight: 0,
+        pic: null,
     }
 
     getImage = (file) =>  {
@@ -32,7 +33,7 @@ class ImageDetails extends React.Component {
     componentDidMount() {
         if (this.props.image) {
             this.getImage(this.props.image)
-                .then(data => this.setState({'imageWidth': data.width, 'imageHeight': data.height}));
+                .then(data => this.setState({'pic': data }));
         }
     }
 
@@ -74,11 +75,12 @@ class ImageDetails extends React.Component {
                 ? <div className="wrapper">
                     <Paper classes={{ root: 'paper-wrap' }}>
                         <div className="image-wrapper">
-                            <Paper>
+                            <Paper classes={{ root: 'paper-wrap' }}>
                                 <img
-                                    src={ require("../../image.bmp") }
+                                    src={ this.state.pic.src }
                                     onMouseMove={this.onMouseOver}
                                     ref={this.image}
+                                    alt="stuff"
                                 />
                             </Paper>
                         </div>

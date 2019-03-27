@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 import './index.css';
 
-const TextFieldGroup = ({ field, value, label, error, type, onChange }) => {
+const TextFieldGroup = ({ field, value, label, error, type, onChange, onBlur }) => {
   return (
     <div className="input-wrapper">
       <label className="control-label">{label}</label>
@@ -14,6 +14,7 @@ const TextFieldGroup = ({ field, value, label, error, type, onChange }) => {
         value: value,
         type: type,
         name: field,
+        onBlur: onBlur,
         }} />
       {error && <span className="help-block">{error}</span>}
     </div>
