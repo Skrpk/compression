@@ -1,18 +1,20 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+
+import './index.css';
 
 const TextFieldGroup = ({ field, value, label, error, type, onChange }) => {
   return (
-    <div className={classnames('form-group', { 'has-error': error })}>
+    <div className="input-wrapper">
       <label className="control-label">{label}</label>
-      <input
-        onChange={onChange}
-        value={value}
-        type={type}
-        name={field}
-        className="form-control"
-      />
+      <TextField InputProps={{
+        onChange: onChange,
+        value: value,
+        type: type,
+        name: field,
+        }} />
       {error && <span className="help-block">{error}</span>}
     </div>
   );

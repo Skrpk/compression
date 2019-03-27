@@ -7,6 +7,7 @@ import {
 const initialState = Map({
   image: null,
   countedData: [],
+  compCoef: 1,
 });
 
 const mainReducer = (state = initialState, action) => {
@@ -15,6 +16,7 @@ const mainReducer = (state = initialState, action) => {
     case SET_IMAGE: {
       return state
               .set('image', action.image)
+              .set('compCoef', action.compCoef)
               .set('countedData', action.countedData);
     }
     default:

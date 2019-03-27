@@ -1,0 +1,14 @@
+.form-control {
+  border-radius: 3px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.control-label {
+  margin-right: 15px;
+}
