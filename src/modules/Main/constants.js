@@ -1,0 +1,2 @@
+export const SEND_IMAGE_REQUEST = 'SEND_IMAGE_REQUEST';
+export const SET_IMAGE = 'SET_IMAGE';
