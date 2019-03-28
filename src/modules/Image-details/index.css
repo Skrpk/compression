@@ -13,6 +13,15 @@
 .description {
   padding: 20px;
   width: 100%;
+  text-align: left;
+}
+
+.description hr {
+  width: 80%;
+}
+
+.deviation-value {
+  color: red;
 }
 
 .description-paper {

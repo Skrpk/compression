@@ -38,8 +38,6 @@ class ImageDetails extends React.Component {
     }
 
     onMouseOver = (event) => {
-        const { imageWidth, imageHeight } = this.state;
-
         ////////////////////////////
         const height = this.image.current.height;
         const width = this.image.current.width;
@@ -48,22 +46,29 @@ class ImageDetails extends React.Component {
         const { offsetX, offsetY } = event.nativeEvent;
         const { countedData } = this.props;
 
-        const rowSquareWidth = width / countedData[0].length;
-        const columnSquareWidth = height / countedData.length;
+        const rowSquareWidth = width / countedData.deviations[0].length;
+        const columnSquareWidth = height / countedData.deviations.length;
 
         const horizontalCoord = Math.floor(offsetX / rowSquareWidth);
         const verticalCoord = Math.floor(offsetY / columnSquareWidth);
 
-        let mathExp = countedData[verticalCoord][horizontalCoord];
+        let mathExp = countedData.deviations[verticalCoord][horizontalCoord];
 
-        //const value = this.props.countedData.find(obj => obj.x === horizontalCoord && obj.y === verticalCoord);
-        //this.setState({ mathExp: value.M });
         this.setState({ mathExp });
     }
 
+    renderDeviationStat = (stat) => stat.map((elem, key) =>
+        <div key={Math.random()}>
+            <hr/>
+            <p>frequency: {elem.frequency}</p>
+            <p>quantity: {elem.quantity}</p>
+            <p className="deviation-value">value: {elem.value}</p>
+        </div>
+    )
+
     render() {
-        const { mathExp } = this.state;
-        const { image } = this.props;
+        const { mathExp, pic } = this.state;
+        const { image, countedData } = this.props;
         
         if (!image) {
             this.props.history.push('/');
@@ -77,7 +82,7 @@ class ImageDetails extends React.Component {
                         <div className="image-wrapper">
                             <Paper classes={{ root: 'paper-wrap' }}>
                                 <img
-                                    src={ this.state.pic.src }
+                                    src={ pic ? pic.src : '' }
                                     onMouseMove={this.onMouseOver}
                                     ref={this.image}
                                     alt="stuff"
@@ -87,7 +92,12 @@ class ImageDetails extends React.Component {
                     </Paper>
                     <Paper classes={{ root: 'description-paper paper-wrap' }}>
                         <div className="description">
-                            <p>Math expectation: { mathExp }</p>
+                            <p>Math deviation: { mathExp }</p>
+                            <p>Mediana: { countedData.mediana }</p>
+                            <p>Moda: { countedData.moda }</p>
+                            <p>sko: { countedData.sko }</p>
+                            <p>d: { countedData.d }</p>
+                            <p>deviation stat: { this.renderDeviationStat(countedData.deviationsStat) }</p>
                         </div>
                     </Paper>
                 </div>

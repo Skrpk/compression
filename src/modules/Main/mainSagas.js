@@ -17,12 +17,11 @@ function* sendImage({ image, compCoef, callback }) {
     image = bodyFormData.get('image');
     const requestConfig = {
       method: 'post',
-      url: 'http://354065d4.ngrok.io/api/ImageResizer/GetDeviations',
+      url: 'http://986bbbf2.ngrok.io/api/ImageResizer/GetDeviations',
       data: bodyFormData,
       config: { headers: {'Content-Type': 'multipart/form-data' }}
     };
-    debugger
-    const { data: { deviations } } = yield call(axios, requestConfig);
+    const { data } = yield call(axios, requestConfig);
     debugger
     const MOCK_ARRAY = [
       [0, 1, 2, 3],
@@ -34,7 +33,7 @@ function* sendImage({ image, compCoef, callback }) {
       type: SET_IMAGE,
       image,
       compCoef,
-      countedData: deviations,
+      countedData: data,
     });
 
     callback();
